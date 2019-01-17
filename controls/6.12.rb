@@ -14,7 +14,6 @@ control "6.12" do
   2. Ensure the following line is found in the mysqld section
   audit_log = 'FORCE_PLUS_PERMANENT'"
   tag "Default Value": "ON"
-
   query = %(SELECT LOAD_OPTION FROM information_schema.plugins WHERE PLUGIN_NAME='audit_log';)
   sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
            
@@ -24,8 +23,4 @@ control "6.12" do
     subject { audit_log_plugin }
     it {should cmp 'FORCE_PLUS_PERMANENT'}
   end  
-
-  describe mysql_conf do
-    its('mysqld.audit_log') { should cmp 'FORCE_PLUS_PERMANENT' }
-  end
 end

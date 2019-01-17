@@ -19,8 +19,8 @@ control "4.1" do
 
   describe 'The mysql version installed' do
     subject { mysql_version }
-    it { should cmp >= '5.7.24-enterprise-commercial-advanced'}
+    it { should cmp >= '5.7.23'}
   end
-  only_if { os.linux? }
+  
 end
  

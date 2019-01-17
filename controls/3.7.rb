@@ -16,38 +16,9 @@ control "3.7" do
     chown mysql:mysql <ssl_key Value> 
     chmod 400 <ssl_key Value>"
 
-  query = %(select @@ssl_key;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  ssl_key = sql_session.query(query).stdout.strip
-
-  query = %(select @@datadir;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  datadir = sql_session.query(query).stdout.strip
-  
-  if !ssl_key.include? "/"
-  
-    ssl_key = datadir + ssl_key
-    describe file("#{ssl_key}") do
-      it { should exist }
-      its('owner') { should eq 'mysql' }
-      its('group') { should eq 'mysql' }
-      its('mode') { should be <= 0400 }
-    end
-end
-
-if ssl_key.include? "/"
-   
-  describe file("#{ssl_key}") do
-    it { should exist }
-    its('owner') { should eq 'mysql' }
-    its('group') { should eq 'mysql' }
-    its('mode') { should be <= 0400 }
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-end
-
-  only_if { os.linux? }
 end
  

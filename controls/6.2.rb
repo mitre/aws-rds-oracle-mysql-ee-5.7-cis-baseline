@@ -15,25 +15,9 @@ control "6.2" do
   1. Open the MySQL configuration file (my.cnf)
   2. Locate the log-bin entry and set it to a file not on root ('/'), /var, or /usr"
 
-  query = %(select @@global.log_bin_basename;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  global_log_bin_basename = sql_session.query(query).stdout.strip
-
-  describe 'The mysql log files partition installed on' do
-   subject { command("df -h #{global_log_bin_basename}").stdout }
-    it {should_not include '/'}
+  
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-
-  describe 'The mysql log files partition installed on' do
-   subject { command("df -h #{global_log_bin_basename}").stdout }
-    it {should_not include '/var'}
-  end
-
-  describe 'The mysql log files partition installed on' do
-   subject { command("df -h #{global_log_bin_basename}").stdout }
-    it {should_not include '/usr'}
-  end
-  only_if { os.linux? }
 end 

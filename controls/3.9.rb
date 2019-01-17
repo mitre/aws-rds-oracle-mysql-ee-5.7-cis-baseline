@@ -16,35 +16,9 @@ control "3.9" do
     chmod 660 <audit_log_file>
     chown mysql:mysql <audit_log_file>"
 
-  query = %(select @@audit_log_file;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  audit_log_file = sql_session.query(query).stdout.strip
-
-  query = %(select @@datadir;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  datadir = sql_session.query(query).stdout.strip
-
-  if !audit_log_file.include? "/"
-  
-    audit_log_file = datadir + audit_log_file
-    describe file("#{audit_log_file}") do
-      it { should exist }
-      its('owner') { should eq 'mysql' }
-      its('group') { should eq 'mysql' }
-      its('mode') { should be <= 0660 }
-    end
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  if audit_log_file.include? "/"
-    describe file("#{audit_log_file}") do
-      it { should exist }
-      its('owner') { should eq 'mysql' }
-      its('group') { should eq 'mysql' }
-      its('mode') { should be <= 0660 }
-    end
-  end
- only_if { os.linux? }
 end
  

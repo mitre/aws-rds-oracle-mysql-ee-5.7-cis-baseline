@@ -23,4 +23,5 @@ control "8.1" do
     subject { have_ssl }
     it {should cmp 'YES' }
   end
+  
 end

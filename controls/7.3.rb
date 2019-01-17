@@ -15,8 +15,9 @@ control "7.3" do
   is not employed."
   tag "fix": "Use the mysql_config_editor to store authtentication credentials in .mylogin.cnf in encrypted form.
   If not possible, use the user-specific options file, .my.cnf., and restricting file access permissions to the user identity."
-  describe mysql_conf do
-    its('client.password') { should be_nil }
+
+  impact 0.0
+  describe 'This control is not applicable on mysql on aws rds, this setting the value of this setting cannot be verified as we do not have access to the mysql configuration file' do
+    skip 'This control is not applicable on mysql on aws rds, this setting the value of this setting cannot be verified as we do not have access to the mysql configuration file'
   end
-  only_if { os.linux? }
 end

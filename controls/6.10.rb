@@ -13,13 +13,8 @@ control "6.10" do
   tag "Default Value": "ALL"
 
   
-  query = %(audit_log_statement_policy;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  audit_log_statement_policy = sql_session.query(query).stdout.strip.split
-
-  describe 'The MySQL audit_log_statement_policy' do
-    subject { audit_log_statement_policy }
-    it {should cmp 'ALL'}
+  impact 0.0
+  describe 'This control is not applicable on mysql in aws rds, as this setting does not exist' do
+    skip 'This control is not applicable on mysql in aws rds, as this setting does not exist'
   end
 end

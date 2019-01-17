@@ -44,7 +44,12 @@ attributes:
   - name: mysql_administrative_users
     description: 'List of mysql administrative users'
     type: array
-    default: ['root'] 
+    default: ['rdsadmin'] 
+
+  - name: mysql_slave_users
+    description: 'List of mysql administrative users'
+    type: array
+    default: ['rdsadmin']
 
   - name: mysql_users_allowed_modify_or_create
     description: 'List of mysql users allows to modify or create data structures'

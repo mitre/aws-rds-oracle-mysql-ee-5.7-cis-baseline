@@ -26,4 +26,5 @@ control "7.2" do
     subject { secure_auth  }
     it {should cmp 1 }
   end
+
 end

@@ -52,6 +52,7 @@ control "8.2" do
       skip 'There are no mysql remote users, therefore this control is not applicable'
     end
   end
+  
 end
 
 

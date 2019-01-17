@@ -21,17 +21,8 @@ control "3.4" do
     chmod 660 <log file>
     chown mysql:mysql <log file>"
 
-  query = %(select @@slow_query_log_file;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  slow_query_log_file = sql_session.query(query).stdout.strip
-
-  describe file("#{slow_query_log_file}") do
-    it { should exist }
-    its('owner') { should eq 'mysql' }
-    its('group') { should eq 'mysql' }
-    its('mode') { should be <= 0660 }
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end

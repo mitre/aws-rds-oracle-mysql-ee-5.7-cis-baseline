@@ -13,12 +13,7 @@ control "4.3" do
   • Remove --allow-suspicious-udfs from the mysqld start up command line.
   • Remove allow-suspicious-udfs from the MySQL option file."
   tag "Default Value": "FALSE"
-
-  describe mysql_conf do
-    its('allow-suspicious-udfs') { should be_nil }
-  end
-  
-  describe command('ps aux | grep mysql') do
-    its('stdout') { should_not match 'allow-suspicious-udfs' }
+  describe 'This control is not applicable on mysql on aws rds, this setting the value of this setting cannot be verified as we do not have access to the mysql configuration file' do
+    skip 'This control is not applicable on mysql on aws rds, this setting the value of this setting cannot be verified as we do not have access to the mysql configuration file'
   end
 end

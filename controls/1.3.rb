@@ -20,19 +20,9 @@ control "1.3" do
   "
   tag "Default Value": "By default, the MySQL command history file is located in $HOME/.mysql_history"
 
-  history_file = command("find / -name '.mysql_history'").stdout.strip
-
-  describe "The MySql history file: #{history_file}" do
-    subject { file("#{history_file}") }
-    its('link_path') { should eq '/dev/null' }
-    it { should be_linked_to '/dev/null' }
-    it { should be_symlink }
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  describe "The MySql history file: #{history_file}" do
-    subject { file("/dev/null") }
-    its('link_path') { should eq "#{history_file}" }
-    it { should be_linked_to "#{history_file}" }
-  end
-  only_if { os.linux? }
 end
 

@@ -39,4 +39,5 @@ control "7.4" do
     subject { session_sql_mode }
     it {should include 'NO_AUTO_CREATE_USER' }
   end
+  
 end

@@ -19,17 +19,8 @@ control "3.3" do
   tag "fix": "Execute the following command for each log file location requiring corrected permissions and ownership:
     chmod 660 <log file>
     chown mysql:mysql <log file>"
-  query = %(select @@log_error;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  log_error = sql_session.query(query).stdout.strip
-
-  describe file("#{log_error}") do
-    it { should exist }
-    its('owner') { should eq 'mysql' }
-    its('group') { should eq 'mysql' }
-    its('mode') { should be <= 0660 }
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end

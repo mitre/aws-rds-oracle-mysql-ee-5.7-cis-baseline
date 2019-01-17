@@ -14,13 +14,8 @@ control "1.5" do
   usermod -s /bin/false 
   usermod -s /sbin/nologin"
 
-  describe.one do
-    describe passwd.users('mysql') do
-     its('shells') { should cmp '/bin/false' }
-    end
-    describe passwd.users('mysql') do
-     its('shells') { should cmp '/sbin/nologin' }
-    end
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end

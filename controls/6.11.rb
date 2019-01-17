@@ -16,19 +16,8 @@ control "6.11" do
   "
   tag "Default Value": "ASYNCHRONOUS"
 
-  query = %(SELECT @@audit_log_strategy;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  audit_log_strategy = sql_session.query(query).stdout.strip
-
-  describe.one do
-    describe 'The MySQL audit_log_strategy variable' do
-      subject { audit_log_strategy }
-      it {should cmp 'SYNCHRONOUS'}
-    end 
-    describe 'The MySQL audit_log_strategy variable' do
-      subject { audit_log_strategy }
-      it {should cmp 'SEMISYNCHRONOUS'}
-    end
-  end   
+  impact 0.0
+  describe 'This control is not applicable on mysql in aws rds, as this setting does not exist' do
+    skip 'This control is not applicable on mysql in aws rds, as this setting does not exist'
+  end
 end

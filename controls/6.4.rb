@@ -19,7 +19,9 @@ control "6.4" do
     log-raw = OFF"
   tag "Default Value": "OFF"
 
-  describe mysql_conf do
-    its('log-raw') { should cmp 'OFF' }
+  
+  impact 0.0
+  describe 'This control is not applicable on mysql in aws rds, as this setting does not exist' do
+    skip 'This control is not applicable on mysql in aws rds, as this setting does not exist'
   end
 end

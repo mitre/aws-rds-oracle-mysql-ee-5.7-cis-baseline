@@ -17,16 +17,8 @@ control "3.1" do
       chmod 700 <datadir>
       chown mysql:mysql <datadir>"
 
-  query = %(select @@datadir;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  datadir = sql_session.query(query).stdout.strip
-
-  describe directory("#{datadir}") do
-    it { should exist }
-    its('owner') { should eq 'mysql' }
-    its('group') { should eq 'mysql' }
-    its('mode') { should be <= 0700 }
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end

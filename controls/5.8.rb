@@ -24,7 +24,7 @@ control "5.8" do
     mysql_user_repl_slave_priv.each do |user|
       describe "The mysql user: #{user} with repl_slave_priv" do
         subject { user }
-        it { should be_in attribute('mysql_administrative_users') }
+        it { should be_in attribute('mysql_slave_users') }
       end
     end
   end

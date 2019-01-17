@@ -17,19 +17,9 @@ control "6.5" do
   To ensure this remediation remains indefinite for the life of the MySQL Server, set audit_log_connection_policy in the server's assigned MySQL configuration file (usually named my.cnf, but not always)."
   tag "Default Value": "The default value for audit_log_connection_policy is ALL."
 
-  query = %(SELECT @@audit_log_connection_policy;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  audit_log_connection_policy = sql_session.query(query).stdout.strip
-
-  describe.one do
-    describe 'The MySQL audit_log_connection_policy' do
-      subject { audit_log_connection_policy }
-      it {should cmp 'ALL' }
-    end
-    describe 'The MySQL audit_log_connection_policy' do
-      subject { audit_log_connection_policy }
-      it {should cmp 'ERRORS' }
-    end
-  end  
+  
+  impact 0.0
+  describe 'This control is not applicable on mysql in aws rds, as this setting does not exist' do
+    skip 'This control is not applicable on mysql in aws rds, as this setting does not exist'
+  end
 end

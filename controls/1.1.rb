@@ -26,28 +26,12 @@ control "1.1" do
   Alter those two paths to be the new location you chose above. For example, if that new location were /media/mysql, then the /etc/apparmor.d/usr.sbin.mysqld file should include something like this:
   # Allow data dir access /media/mysql/ r,
    /media/mysql/** rwk,
-"
+  "
   tag "Default Value": "Not Applicable"
 
-  query = %(select @@datadir;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  datadir = sql_session.query(query).stdout.strip.split
-
-  describe 'The mysql data directory partition installed on' do
-   subject { command("df -h #{datadir}").stdout }
-    it {should_not include '/'}
+  
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-
-  describe 'The mysql data directory partition installed on' do
-   subject { command("df -h #{datadir}").stdout }
-    it {should_not include '/var'}
-  end
-
-  describe 'The mysql data directory partition installed on' do
-   subject { command("df -h #{datadir}").stdout }
-    it {should_not include '/usr'}
-  end
-  only_if { os.linux? }
 end

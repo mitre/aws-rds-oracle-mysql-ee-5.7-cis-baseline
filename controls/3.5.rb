@@ -21,21 +21,9 @@ control "3.5" do
       chmod 660 <log file>
       chown mysql:mysql <log file>"
 
-  query = %(select @@relay_log_basename;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  relay_log_basename = sql_session.query(query).stdout.strip
-
-  relay_log_basename_files = command("ls #{relay_log_basename}*").stdout.strip.split("\n")
-
-  relay_log_basename_files.each do |file|
-    describe file("#{file}") do
-      its('owner') { should eq 'mysql' }
-      its('group') { should eq 'mysql' }
-      its('mode') { should be <= 0660 }
-    end
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end
  

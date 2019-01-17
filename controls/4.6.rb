@@ -17,9 +17,13 @@ control "4.6" do
   • Set the skip_symbolic_links to YES
   NOTE: If skip_symbolic_links does not exist, add it to the configuration file in the mysqld section.
   "
+  query = %(SHOW variables LIKE 'have_symlink';)
+  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
+           
+  have_symlink = sql_session.query(query).stdout.strip
 
-  describe mysql_conf.params('mysqld') do
-    its('skip_symbolic_links') { should cmp 'YES' }
-    its('socket') { should eq '/var/run/mysqld/mysql.sock' }
+  describe 'The mysql variable have_symlink' do
+    subject { have_symlink }
+    it { should cmp 'NO'}
   end
 end

@@ -11,13 +11,9 @@ control "6.9" do
   tag "fix": "Set audit_log_policy='ALL' in the MySQL configuration file and activate the setting by restarting the server or executing SET GLOBAL audit_log_policy='ALL';"
   tag "Default Value": "ALL"
 
-  query = %(SELECT @@audit_log_policy;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  audit_log_policy = sql_session.query(query).stdout.strip
-
-  describe 'The MySQL audit_log_policy' do
-    subject { audit_log_policy  }
-    it {should cmp 'ALL' }
+ 
+  impact 0.0
+  describe 'This control is not applicable on mysql in aws rds, as this setting does not exist' do
+    skip 'This control is not applicable on mysql in aws rds, as this setting does not exist'
   end
 end

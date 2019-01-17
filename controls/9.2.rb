@@ -30,5 +30,9 @@ control "9.2" do
       skip 'There is no mysql server slave configured, therfore this control is not applicable'
     end
   end
+  impact 0.0
+  describe 'This control is not applicable on aws rds' do
+    skip 'This control is not applicable on aws rds'
+  end
 end
  

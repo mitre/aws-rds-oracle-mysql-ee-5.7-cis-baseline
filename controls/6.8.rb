@@ -12,19 +12,9 @@ control "6.8" do
    SET GLOBAL audit_log_policy='ALL'; or SET GLOBAL audit_log_policy='LOGINS';"
   tag "Default Value": "ALL"
 
-  query = %(SELECT @@audit_log_policy;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  audit_log_policy = sql_session.query(query).stdout.strip
-
-  describe.one do
-    describe 'The MySQL audit_log_policy' do
-      subject { audit_log_policy }
-      it {should cmp 'ALL' }
-    end
-    describe 'The MySQL audit_log_policy' do
-      subject { audit_log_policy }
-      it {should cmp 'LOGINS' }
-    end
-  end  
+  
+  impact 0.0
+  describe 'This control is not applicable on mysql in aws rds, as this setting does not exist' do
+    skip 'This control is not applicable on mysql in aws rds, as this setting does not exist'
+  end
 end

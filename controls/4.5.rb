@@ -13,7 +13,8 @@ control "4.5" do
   • Open the MySQL configuration (e.g. my.cnf) file and set: 
     skip-grant-tables = FALSE"
 
-  describe mysql_conf do
-    its('skip-grant-tables') { should cmp 'FALSE' }
+  impact 0.0
+  describe 'This control is not applicable on mysql on aws rds, this setting the value of this setting cannot be verified as we do not have access to the mysql configuration file' do
+    skip 'This control is not applicable on mysql on aws rds, this setting the value of this setting cannot be verified as we do not have access to the mysql configuration file'
   end
 end

@@ -17,7 +17,7 @@ control "9.3" do
   3. Set the master_info_repository value to TABLE
   NOTE: If master_info_repository does not exist, add it to the configuration file."
   tag "Default Value": "FILE"
-  query = 'select @@master_info_repository'
+  query = 'select @@master_info_repository;'
   sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
   master_info_repository = sql_session.query(query).stdout.strip       
   describe "The master_info_repository" do

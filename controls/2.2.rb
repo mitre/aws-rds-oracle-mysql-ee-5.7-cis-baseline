@@ -10,11 +10,9 @@ control "2.2" do
   Check the shell or command history if the password is visible"
   tag "fix": "Use -p without password and then enter the password when prompted, use a properly secured .my.cnf file, or store authentication information in encrypted format in .mylogin.cnf"
 
-  bash_history_file = command("find / -name '.bash_history'").stdout.strip
-
-  describe 'The linux bash history file' do
-    subject { file("#{bash_history_file}") }
-     its('content') { should_not include attribute('password') }
+  
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end

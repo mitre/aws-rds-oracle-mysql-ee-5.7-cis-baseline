@@ -12,9 +12,9 @@ control "1.2" do
   NOTE: It is assumed that the MySQL user is mysql. Additionally, you may consider running
   sudo -l as the MySQL user or to check the sudoers file."
   tag "fix": "Create a user which is only used for running MySQL and directly related processes. This user must not have administrative rights to the system."
-  describe 'The user runnning the MySQL Daemon/Service' do
-    subject { command("ps -ef | egrep '^mysql.*$' | awk {'print $1'}").stdout.strip }
-    it { should cmp 'mysql'}
+
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end

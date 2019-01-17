@@ -12,9 +12,8 @@ control "1.4" do
   tag "fix": "Check which users and/or scripts are setting MYSQL_PWD and change them to use a more secure method."
   tag "Default Value": "Not set"
 
-  describe 'The MYSQL_PWD environment variable' do 
-    subject { command('grep MYSQL_PWD /proc/*/environ').stdout.strip }
-    it {should eq ''}
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
   end
-  only_if { os.linux? }
 end

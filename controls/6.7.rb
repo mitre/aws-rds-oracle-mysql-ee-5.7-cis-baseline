@@ -14,13 +14,9 @@ control "6.7" do
   Or set audit_log_include_accounts=NULL in my.cnf."
   tag "Default Value": "audit_log_include_accounts is set to NULL by default."
 
-  query = %(SELECT @@audit_log_include_accounts;)
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  audit_log_include_accounts = sql_session.query(query).stdout.strip
-
-  describe 'The MySQL audit_log_include_accounts' do
-    subject { audit_log_include_accounts }
-    it {should cmp 'NULL' }
+  
+  impact 0.0
+  describe 'This control is not applicable on mysql in aws rds, as this setting does not exist' do
+    skip 'This control is not applicable on mysql in aws rds, as this setting does not exist'
   end
 end

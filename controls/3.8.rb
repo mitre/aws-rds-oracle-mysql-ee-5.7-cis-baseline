@@ -17,17 +17,8 @@ control "3.8" do
   tag "fix": "To remediate these settings, execute the following commands at a terminal prompt using the plugin_dir Value from the audit procedure.
     chmod 775 <plugin_dir Value> (or use 755) 
     chown mysql:mysql <plugin_dir Value>"
-  query = %(select @@plugin_dir;)
-
-  sql_session = mysql_session(attribute('user'),attribute('password'),attribute('host'),attribute('port'))
-           
-  plugin_dir = sql_session.query(query).stdout.strip
-
-  describe directory("#{plugin_dir}") do
-    it { should exist }
-    its('owner') { should eq 'mysql' }
-    its('group') { should eq 'mysql' }
-    its('mode') { should be <= 0775 }
-   end
-   only_if { os.linux? }
+  impact 0.0
+  describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+    skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
+  end
 end
