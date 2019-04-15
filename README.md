@@ -1,4 +1,4 @@
-# cis-aws-rds-mysql-server-enterprise-v5.7-baseline
+# aws-rds-oracle-mysql-ee-5.7-cis-baseline
 
 InSpec profile testing secure configuration of AWS RDS MYSQL Server Enterprise version 5.7.
 
@@ -22,13 +22,13 @@ You may choose to run the profile via a remote url, this has the advantage of al
 The disadvantage is you may wish to modify controls, which is only possible when downloaded.
 Also, the remote profile is unintuitive for passing in attributes, which modify the default values of the profile.
 ``` bash
-inspec exec https://github.com/mitre/cis-aws-rds-mysql-server-enterprise-v5.7-baseline.git
+inspec exec https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline.git
 ```
 
 Another option is to download the profile then run it, this allows you to edit specific instructions and view the profile code.
 ``` bash
 # Clone Inspec Profile
-$ git clone https://github.com/mitre/cis-aws-rds-mysql-server-enterprise-v5.7-baseline.git
+$ git clone https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline.git
 
 # Run profile locally (assuming you have not changed directories since cloning)
 # This will display compliance level at the prompt, and generate a JSON file 
