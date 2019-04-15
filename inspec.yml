@@ -1,4 +1,4 @@
-name: cis-aws-rds-mysql-server-enterprise-v5.7-baseline
+name: aws-rds-oracle-mysql-ee-5.7-cis-baseline
 title: CIS baseline for AWS RDS Mysql server enterprise edition 5.7
 maintainer: MITRE InSpec Team
 copyright: The MITRE Corporation, 2018
@@ -12,8 +12,8 @@ supports:
 inspec_version: "~> 3.0"
 
 depends:
-- name: Oracle-MySQL-Enterprise-Edition-5.7-cis-baseline
-  git: https://github.com/mitre/Oracle-MySQL-Enterprise-Edition-5.7-cis-baseline
+- name: oracle-mysql-ee-5.7-cis-baseline
+  git: https://github.com/mitre/oracle-mysql-ee-5.7-cis-baseline
   branch: master
 
 attributes:
