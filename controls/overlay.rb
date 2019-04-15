@@ -1,4 +1,4 @@
-include_controls 'Oracle-MySQL-Enterprise-Edition-5.7-cis-baseline' do
+include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
 
 	control "1.1" do
 	  impact 0.0
