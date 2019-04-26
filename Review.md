@@ -6,7 +6,7 @@
 | |Local commands focused on target not the runner|Mo|04/12/2019|*|
 |Quality checks|Alignment (including tagging) to original<br> standard (i.e. STIG, CIS Benchmark, NIST Tags)|Mo|04/10/2019|*|
 | |Descriptive output for findings details|Mo|04/10/2019|*|
-| |Documentation quality (i.e. README)<br> novice level instructions including prerequisites|Mo|04/10/2019|*|
+| |Documentation quality (i.e. README)<br> novice level instructions including prerequisites|Mo|04/10/2019|#4|
 | |Consistency across other profile conventions |Mo|04/10/2019|*|
 | |Spelling grammar|Mo|04/15/2019 |#1|
 | |Removing debugging documentation and code|Mo|04/10/2019|*|
