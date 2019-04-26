@@ -189,6 +189,8 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
   end
   
   control '7.6' do
+    
+    validate_password_plugin_status_query = %{SELECT plugin_status from information_schema.plugins where plugin_name like 'validate_password%'}
     validate_password_length_query = %{SELECT @@validate_password_length}
     validate_password_mixed_case_count_query = %{SELECT @@validate_password_mixed_case_count}
     validate_password_number_count_query = %{SELECT @@validate_password_number_count}
@@ -199,7 +201,8 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
       WHERE authentication_string=CONCAT('*', UPPER(SHA1(UNHEX(SHA1(user)))));}
 
     sql_session = mysql_session(attribute('user'), attribute('password'), attribute('host'), attribute('port'))
-
+    
+    validate_password_plugin_status = sql_session.query(validate_password_plugin_status_query).stdout.strip
     validate_password_length = sql_session.query(validate_password_length_query).stdout.strip
     validate_password_mixed_case_count = sql_session.query(validate_password_mixed_case_count_query).stdout.strip
     validate_password_number_count = sql_session.query(validate_password_number_count_query).stdout.strip
@@ -211,6 +214,11 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
     describe 'The MySQL validate_password_length variable' do
       subject { validate_password_length }
       it { should cmp >= 14 }
+    end
+    
+    describe 'The MySQL validate_password plugin status' do
+      subject { validate_password_plugin_status }
+      it { should cmp 'active' }
     end
 
     describe 'The MySQL validate_password_mixed_case_count variable' do
