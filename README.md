@@ -68,7 +68,7 @@ $ git clone https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline.gi
 # Run profile locally (assuming you have not changed directories since cloning)
 # This will display compliance level at the prompt, and generate a JSON file 
 # for export called output.json
-$ inspec exec aws-rds-oracle-mysql-ee-5.7-cis-baseline --reporter cli json:output.json
+$ inspec exec aws-rds-oracle-mysql-ee-5.7-cis-baseline --attrs attributes.yml --reporter cli json:output.json
 
 # Run profile with custom settings defined in attributes.yml against the target 
 # server example.com. 
