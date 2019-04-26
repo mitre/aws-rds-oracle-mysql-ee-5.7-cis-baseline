@@ -187,6 +187,69 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
       skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
     end
   end
+  
+  control '7.6' do
+    validate_password_length_query = %{SELECT @@validate_password_length}
+    validate_password_mixed_case_count_query = %{SELECT @@validate_password_mixed_case_count}
+    validate_password_number_count_query = %{SELECT @@validate_password_number_count}
+    validate_password_special_char_count_query = %{SELECT @@validate_password_special_char_count}
+    validate_password_policy_query = %{SELECT @@validate_password_policy}
+    validate_password_check_user_name_query = %{SELECT @@validate_password_check_user_name}
+    users_wih_username_equal_to_password_query = %{SELECT User,authentication_string,Host FROM mysql.user
+      WHERE authentication_string=CONCAT('*', UPPER(SHA1(UNHEX(SHA1(user)))));}
+
+    sql_session = mysql_session(attribute('user'), attribute('password'), attribute('host'), attribute('port'))
+
+    validate_password_length = sql_session.query(validate_password_length_query).stdout.strip
+    validate_password_mixed_case_count = sql_session.query(validate_password_mixed_case_count_query).stdout.strip
+    validate_password_number_count = sql_session.query(validate_password_number_count_query).stdout.strip
+    validate_password_special_char_count = sql_session.query(validate_password_special_char_count_query).stdout.strip
+    validate_password_policy = sql_session.query(validate_password_policy_query).stdout.strip
+    validate_password_check_user_name = sql_session.query(validate_password_check_user_name_query).stdout.strip
+    users_wih_username_equal_to_password = sql_session.query(users_wih_username_equal_to_password_query).stdout.strip
+
+    describe 'The MySQL validate_password_length variable' do
+      subject { validate_password_length }
+      it { should cmp >= 14 }
+    end
+
+    describe 'The MySQL validate_password_mixed_case_count variable' do
+      subject { validate_password_mixed_case_count }
+      it { should cmp >= 1 }
+    end
+
+    describe 'The MySQL validate_password_number_count variable' do
+      subject { validate_password_number_count }
+      it { should cmp >= 1 }
+    end
+
+    describe 'The MySQL validate_password_special_char_count variable' do
+      subject { validate_password_special_char_count }
+      it { should cmp >= 1 }
+    end
+
+    describe.one do
+      describe 'The MySQL validate_password_policy variable' do
+        subject { validate_password_policy }
+        it { should cmp 'MEDIUM' }
+      end
+      describe 'The MySQL validate_password_policy variable' do
+        subject { validate_password_policy }
+        it { should cmp 'STRONG' }
+      end
+    end
+    
+    describe.one do
+      describe 'The MySQL validate_password_check_user_name variable' do
+        subject { validate_password_check_user_name }
+        it { should cmp 1 }
+      end
+      describe 'The MySQL users with their password identical to their username' do
+        subject { users_wih_username_equal_to_password }
+        it { should be_empty }
+      end
+    end
+  end
 
   control '9.1' do
     impact 0.0
