@@ -48,6 +48,9 @@ mysql_administrative_users: []
 # List of MySQL users allows to modify or create data structures
 mysql_users_allowed_modify_or_create: []
 ```
+## Note
+
+It is assumed that the password complexity plugin: validate_password.so is installed, otherwise control 7.6 will fail
 
 ### Run with remote profile:
 You may choose to run the profile via a remote url, this has the advantage of always being up to date.
