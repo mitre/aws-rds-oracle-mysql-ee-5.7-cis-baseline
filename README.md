@@ -17,6 +17,38 @@ InSpec is an open-source run-time framework and rule language used to specify co
 ## Usage
 InSpec makes it easy to run tests wherever you need. More options listed here: [InSpec cli](http://inspec.io/docs/reference/cli/)
 
+The following attributes must be configured in an attributes file for the profile to run correctly. More information about InSpec attributes can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
+
+```
+# Description of attribute
+attribute-name: default-value
+
+# Username for MySQL DB Server
+user: null
+
+# Password for MySQL DB Server
+password: null
+
+# Hostname of MySQL DB Server
+host: null
+
+
+# Port number of MySQL DB Server
+port: 49789
+
+# List of MySQL database users
+mysql_users: []
+
+# Set to true if the MySQL server has a slave configured
+is_mysql_server_slave_configured: false
+
+# List of MySQL administrative users
+mysql_administrative_users: []
+
+# List of MySQL users allows to modify or create data structures
+mysql_users_allowed_modify_or_create: []
+```
+
 ### Run with remote profile:
 You may choose to run the profile via a remote url, this has the advantage of always being up to date.
 The disadvantage is you may wish to modify controls, which is only possible when downloaded.
