@@ -26,6 +26,13 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
       skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
     end
   end
+  
+  control '1.5' do
+    impact 0.0
+    describe 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on' do
+      skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
+    end
+  end
 
   control '2.1' do
     impact 0.0
