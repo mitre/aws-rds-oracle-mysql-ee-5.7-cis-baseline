@@ -20,12 +20,12 @@ attributes:
   - name: user
     description: 'username MSSQL DB Server'
     type: string
-    default: 'test'
+    value: 'test'
 
   - name: password
     description: 'password MSSQL DB Server'
     type: string
-    default: 'test1234'
+    value: 'test1234'
 
   - name: host
     description: 'hostname MSSQL DB Server'
@@ -34,29 +34,29 @@ attributes:
   - name: port
     description: 'port MSSQL DB Server'
     type: numeric
-    default: 3333
+    value: 3333
 
   - name: mysql_users
     description: 'List of mysql database users'
     type: array
-    default: ['root']   
+    value: ['root']   
 
   - name: is_mysql_server_slave_configured
     description: 'Set to true if the mysql server has a slave configured'
     type: boolean
-    default: true
+    value: true
 
   - name: mysql_administrative_users
     description: 'List of mysql administrative users'
     type: array
-    default: ['rdsadmin'] 
+    value: ['rdsadmin'] 
 
   - name: mysql_slave_users
     description: 'List of mysql administrative users'
     type: array
-    default: ['rdsadmin']
+    value: ['rdsadmin']
 
   - name: mysql_users_allowed_modify_or_create
     description: 'List of mysql users allows to modify or create data structures'
     type: array
-    default: ['root'] 
+    value: ['root'] 
