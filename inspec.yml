@@ -2,7 +2,7 @@ name: aws-rds-oracle-mysql-ee-5.7-cis-baseline
 title: CIS baseline for AWS RDS Mysql server enterprise edition 5.7
 maintainer: MITRE InSpec Team
 copyright: The MITRE Corporation, 2018
-copyright_email: opensource@mitre.org
+copyright_email: .
 summary: The AWS RDS Mysql Server Enterprise Edition Benchmark InSpec profile.
 license: Apache-2.0
 Description: An InSpec Compliance Profile. 
@@ -12,50 +12,17 @@ inspec_version: ">= 4.0"
 
 depends:
 - name: oracle-mysql-ee-5.7-cis-baseline
-  git: https://github.com/mitre/oracle-mysql-ee-5.7-cis-baseline
-  branch: master
+  url: https://github.com/mitre/oracle-mysql-ee-5.7-cis-baseline/archive/eja_updates.tar.gz
 
-attributes:
-  - name: user
-    description: 'username MSSQL DB Server'
-    type: string
-    value: 'test'
-
-  - name: password
-    description: 'password MSSQL DB Server'
-    type: string
-    value: 'test1234'
-
-  - name: host
-    description: 'hostname MSSQL DB Server'
-    default: 'test.cjwekmnpixnv.us-east-2.rds.amazonaws.com'
-
-  - name: port
-    description: 'port MSSQL DB Server'
-    type: numeric
-    value: 3333
-
-  - name: mysql_users
-    description: 'List of mysql database users'
-    type: array
-    value: ['root']   
-
-  - name: is_mysql_server_slave_configured
-    description: 'Set to true if the mysql server has a slave configured'
-    type: boolean
-    value: true
-
+inputs:
   - name: mysql_administrative_users
     description: 'List of mysql administrative users'
     type: array
     value: ['rdsadmin'] 
+    profile: oracle-mysql-ee-5.7-cis-baseline
 
   - name: mysql_slave_users
     description: 'List of mysql administrative users'
     type: array
     value: ['rdsadmin']
-
-  - name: mysql_users_allowed_modify_or_create
-    description: 'List of mysql users allows to modify or create data structures'
-    type: array
-    value: ['root'] 
+    profile: oracle-mysql-ee-5.7-cis-baseline
