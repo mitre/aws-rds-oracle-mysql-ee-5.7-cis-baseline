@@ -20,12 +20,6 @@ inputs:
     type: array
     value: ['rdsadmin'] 
     profile: oracle-mysql-ee-5.7-cis-baseline
-
-  - name: mysql_slave_users
-    description: 'List of mysql administrative users'
-    type: array
-    value: ['rdsadmin']
-    profile: oracle-mysql-ee-5.7-cis-baseline
     
   - name: user
     description: 'username MySQL DB Server'
