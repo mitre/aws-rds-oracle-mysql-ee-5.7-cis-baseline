@@ -7,12 +7,12 @@ summary: The AWS RDS Mysql Server Enterprise Edition Benchmark InSpec profile.
 license: Apache-2.0
 Description: An InSpec Compliance Profile. 
 
-version: 1.0.5
+version: 1.0.6
 inspec_version: ">= 4.0"
 
 depends:
 - name: oracle-mysql-ee-5.7-cis-baseline
-  url: https://github.com/mitre/oracle-mysql-ee-5.7-cis-baseline/archive/master.tar.gz
+  url: https://github.com/mitre/oracle-mysql-ee-5.7-cis-baseline/archive/rds_adjustments.tar.gz
 
 inputs:
   - name: mysql_administrative_users
@@ -26,3 +26,20 @@ inputs:
     type: array
     value: ['rdsadmin']
     profile: oracle-mysql-ee-5.7-cis-baseline
+    
+  - name: user
+    description: 'username MySQL DB Server'
+    type: string
+    value: ''
+    sensitive: true
+
+  - name: password
+    description: 'password MySQL DB Server'
+    type: string
+    value: ''
+    sensitive: true
+
+  - name: host
+    description: 'hostname of MySQL DB Server'
+    value: ''
+    sensitive: true
