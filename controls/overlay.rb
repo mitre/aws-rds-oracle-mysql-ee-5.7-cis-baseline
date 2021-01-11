@@ -202,7 +202,7 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
       SELECT LOAD_OPTION FROM information_schema.plugins WHERE PLUGIN_NAME='SERVER_AUDIT';
     The result must be FORCE_PLUS_PERMANENT"
     tag "fix": "To remediate this setting, follow these steps, configure the settings of your 
-     MariaDB Audit Plugin on your custom option group"
+     MariaDB Audit Plugin on your AWS custom option group"
   
     query = %{SELECT LOAD_OPTION FROM information_schema.plugins WHERE PLUGIN_NAME='SERVER_AUDIT';}
     sql_session = mysql_session(attribute('user'), attribute('password'), attribute('host'), attribute('port'))
@@ -223,6 +223,24 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
     end
   end
   
+  control '7.5' do
+    tag "check": "Execute the following SQL query to determine if any users have a blank password:
+        SELECT user,host 
+        FROM mysql.user 
+        WHERE (plugin IN('mysql_native_password', 'mysql_old_password') 
+          AND LENGTH(password) = 0 AND LENGTH(authentication_string) = 0);
+    No rows will be returned if all accounts have a password set."
+
+    query = %{SELECT user,host FROM mysql.user WHERE (plugin IN('mysql_native_password', 'mysql_old_password') AND LENGTH(password) = 0 AND LENGTH(authentication_string) = 0);}
+    sql_session = mysql_session(attribute('user'), attribute('password'), attribute('host'), attribute('port'))
+    users_with_blank_passwords = sql_session.query(query).stdout.strip
+
+    describe 'The MySQL users with blank passwords' do
+      subject { users_with_blank_passwords }
+      it { should be_empty }
+    end
+  end
+
   control '7.6' do
     
     validate_password_plugin_status_query = %{SELECT plugin_status from information_schema.plugins where plugin_name like 'validate_password%'}
