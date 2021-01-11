@@ -194,6 +194,27 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
       skip 'This control is not applicable on mysql within aws rds, as aws manages the operating system in which the mysql database is running on'
     end
   end
+  
+  control '6.12' do
+    tag "check": "(AWS RDS note: AWS supports this type of plugin via the MariaDB SERVER_AUDIT plugin:
+    https://aws.amazon.com/premiumsupport/knowledge-center/advanced-audit-rds-mysql-cloudwatch/)
+    To assess this recommendation, execute the following SQL statement:
+      SELECT LOAD_OPTION FROM information_schema.plugins WHERE PLUGIN_NAME='SERVER_AUDIT';
+    The result must be FORCE_PLUS_PERMANENT"
+    tag "fix": "To remediate this setting, follow these steps, configure the settings of your 
+     MariaDB Audit Plugin on your custom option group"
+  
+    query = %{SELECT LOAD_OPTION FROM information_schema.plugins WHERE PLUGIN_NAME='SERVER_AUDIT';}
+    sql_session = mysql_session(attribute('user'), attribute('password'), attribute('host'), attribute('port'))
+
+    audit_log_plugin = sql_session.query(query).stdout.strip
+
+    describe 'The MySQL audit plugin (SERVER_AUDIT)' do
+      subject { audit_log_plugin }
+      it { should cmp 'FORCE_PLUS_PERMANENT' }
+    end
+
+  end
 
   control '7.3' do
     impact 0.0
