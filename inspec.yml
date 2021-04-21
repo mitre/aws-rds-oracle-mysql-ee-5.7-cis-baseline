@@ -1,13 +1,11 @@
 name: aws-rds-oracle-mysql-ee-5.7-cis-baseline
-title: CIS baseline for AWS RDS Mysql server enterprise edition 5.7
+title: aws-rds-oracle-mysql-ee-5.7-cis-baseline
 maintainer: MITRE InSpec Team
 copyright: The MITRE Corporation, 2018
 copyright_email: .
-summary: The AWS RDS Mysql Server Enterprise Edition Benchmark InSpec profile.
+summary: 'InSpec Validation Profile for AWS RDS Mysql server enterprise edition 5.7 CIS'
 license: Apache-2.0
-Description: An InSpec Compliance Profile. 
-
-version: 1.0.8
+version: 1.0.9
 inspec_version: ">= 4.0"
 
 depends:
@@ -20,6 +18,7 @@ inputs:
     type: array
     value: ['rdsadmin'] 
     profile: oracle-mysql-ee-5.7-cis-baseline
+    sensitive: true
     
   - name: mysql_users
     description: 'List of mysql database users'
@@ -31,15 +30,18 @@ inputs:
     description: 'username MySQL DB Server'
     type: string
     value: ''
+    profile: oracle-mysql-ee-5.7-cis-baseline
     sensitive: true
 
   - name: password
     description: 'password MySQL DB Server'
     type: string
     value: ''
+    profile: oracle-mysql-ee-5.7-cis-baseline
     sensitive: true
 
   - name: host
     description: 'hostname of MySQL DB Server'
     value: ''
+    profile: oracle-mysql-ee-5.7-cis-baseline
     sensitive: true
