@@ -30,18 +30,15 @@ inputs:
     description: 'username MySQL DB Server'
     type: string
     value: ''
-    profile: oracle-mysql-ee-5.7-cis-baseline
     sensitive: true
 
   - name: password
     description: 'password MySQL DB Server'
     type: string
     value: ''
-    profile: oracle-mysql-ee-5.7-cis-baseline
     sensitive: true
 
   - name: host
     description: 'hostname of MySQL DB Server'
     value: ''
-    profile: oracle-mysql-ee-5.7-cis-baseline
     sensitive: true
