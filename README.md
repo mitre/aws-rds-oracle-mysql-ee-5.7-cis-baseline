@@ -1,103 +1,105 @@
 # aws-rds-oracle-mysql-ee-5.7-cis-baseline
 
-InSpec profile testing secure configuration of AWS RDS MYSQL Server Enterprise version 5.7.
+InSpec Profile to validate the secure configuration of aws-rds-infrastructure-cis-baseline, against [CIS'](https://www.cisecurity.org/cis-benchmarks/) AWS RDS MYSQL Server Enterprise version 5.7
 
-## Description
+## Getting Started  
+It is intended and recommended that InSpec run this profile from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __ssh__.
 
-This InSpec compliance profile is a collection of automated tests for secure configuration of the AWS RDS MYSQL Server Enterprise version 5.7.
+The latest versions and installation options are available at the [InSpec](http://inspec.io/) site.
 
-InSpec is an open-source run-time framework and rule language used to specify compliance, security, and policy requirements for testing any node in your infrastructure.
+## Tailoring to Your Environment
+The following inputs must be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. More information about InSpec inputs can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
 
-## Requirements
-
-- [ruby](https://www.ruby-lang.org/en/) version 2.4  or greater
-- [InSpec](http://inspec.io/) version 3.x or greater
-    - Install via ruby gem: `gem install inspec`
-
-## Usage
-InSpec makes it easy to run tests wherever you need. More options listed here: [InSpec cli](http://inspec.io/docs/reference/cli/)
-
-The following attributes must be configured in an attributes file for the profile to run correctly. More information about InSpec attributes can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
-
-```
-# Description of attribute
-attribute-name: default-value
-
-# Username for MySQL DB Server
-user: null
-
-# Password for MySQL DB Server
-password: null
-
-# Hostname of MySQL DB Server
-host: null
-
-
-# Port number of MySQL DB Server
-port: 49789
+```yaml
+# List of MySQL administrative users
+mysql_administrative_users: []
 
 # List of MySQL database users
 mysql_users: []
 
-# Set to true if the MySQL server has a slave configured
-is_mysql_server_slave_configured: false
+# Username for MySQL DB Server
+user: ''
 
-# List of MySQL administrative users
-mysql_administrative_users: []
+# Password for MySQL DB Server
+password: ''
 
-# List of MySQL users allows to modify or create data structures
-mysql_users_allowed_modify_or_create: []
+# Hostname of MySQL DB Server
+host: ''
 ```
+
+## Configuring your AWS CLI
+
+The right system environment variables must be set with your AWS region and credentials and session token to use the AWS CLI and InSpec resources in the AWS environment. InSpec supports the following standard AWS variables:
+
+```
+# Set required ENV variables
+$ export AWS_ACCESS_KEY_ID=key-id
+$ export AWS_SECRET_ACCESS_KEY=access-key
+$ export AWS_SESSION_TOKEN=session_token
+$ export AWS_REGION=us-west-1
+```
+
 ## Note
 
 It is assumed that the password complexity plugin: validate_password.so is installed, otherwise control 7.6 will fail
 
-### Run with remote profile:
-You may choose to run the profile via a remote url, this has the advantage of always being up to date.
-The disadvantage is you may wish to modify controls, which is only possible when downloaded.
-Also, the remote profile is unintuitive for passing in attributes, which modify the default values of the profile.
-``` bash
-inspec exec https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline.git
+# Running This Baseline Directly from Github
+
+```
+# How to run
+inspec exec https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline/archive/master.tar.gz -t aws:// --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
-Another option is to download the profile then run it, this allows you to edit specific instructions and view the profile code.
-``` bash
-# Clone Inspec Profile
-$ git clone https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline.git
+### Different Run Options
 
-# Run profile locally (assuming you have not changed directories since cloning)
-# This will display compliance level at the prompt, and generate a JSON file 
-# for export called output.json
-$ inspec exec aws-rds-oracle-mysql-ee-5.7-cis-baseline --attrs attributes.yml --reporter cli json:output.json
+  [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
 
-# Run profile with custom settings defined in attributes.yml against the target 
-# server example.com. 
-$ inspec exec aws-rds-oracle-mysql-ee-5.7-cis-baseline -t ssh://user@password:example.com --attrs attributes.yml --reporter cli json:output.json
+## Running This Baseline from a local Archive copy 
 
-# Run profile with: custom attributes, ssh keyed into a custom target, and sudo.
-$ inspec exec aws-rds-oracle-mysql-ee-5.7-cis-baseline -t ssh://user@hostname -i /path/to/key --sudo --attrs attributes.yml --reporter cli json:output.json
+If your runner is not always expected to have direct access to GitHub, use the following steps to create an archive bundle of this baseline and all of its dependent tests:
+
+(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.)
+
+When the __"runner"__ host uses this profile baseline for the first time, follow these steps: 
+
+```
+mkdir profiles
+cd profiles
+git clone https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline
+inspec archive aws-rds-oracle-mysql-ee-5.7-cis-baseline
+inspec exec <name of generated archive> -t aws:// --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+```
+For every successive run, follow these steps to always have the latest version of this baseline:
+
+```
+cd aws-rds-oracle-mysql-ee-5.7-cis-baseline
+git pull
+cd ..
+inspec archive aws-rds-oracle-mysql-ee-5.7-cis-baseline --overwrite
+inspec exec <name of generated archive> -t aws:// --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
+## Viewing the JSON Results
 
-## Contributors + Kudos
+The JSON results output file can be loaded into __[heimdall-lite](https://heimdall-lite.mitre.org/)__ for a user-interactive, graphical view of the InSpec results. 
 
-- Aaron Lippold
-- The MITRE InSpec Team
+The JSON InSpec results file may also be loaded into a __[full heimdall server](https://github.com/mitre/heimdall)__, allowing for additional functionality such as to store and compare multiple profile runs.
 
-## License and Author
+## Authors
+* Alicia Sturtevant - [asturtevant](https://github.com/asturtevant)
 
-### Authors
-- Author:: Alicia Sturtevant
+## Special Thanks 
+* Mohamed El-Sharkawi - [HackerShark](https://github.com/HackerShark)
+* Shivani Karikar - [karikarshivani](https://github.com/karikarshivani)
 
-### License  
-
-* This project is licensed under the terms of the Apache license 2.0 (apache-2.0)
+## Contributing and Getting Help
+To report a bug or feature request, please open an [issue](https://github.com/mitre/aws-rds-oracle-mysql-ee-5.7-cis-baseline/issues/new).
 
 ### NOTICE  
 
-© 2018 The MITRE Corporation.  
+© 2018-2020 The MITRE Corporation.
 
-Approved for Public Release; Distribution Unlimited. Case Number 18-3678.  
+Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
 
 ## NOTICE  
 
@@ -111,6 +113,6 @@ No other use other than that granted to the U. S. Government, or to those acting
 
 For further information, please contact The MITRE Corporation, Contracts Management Office, 7515 Colshire Drive, McLean, VA  22102-7539, (703) 983-6000.  
 
-## NOTICE  
+### NOTICE  
 
 CIS Benchmarks are published by the Center for Internet Security (CIS), see: https://www.cisecurity.org/cis-benchmarks/.   
