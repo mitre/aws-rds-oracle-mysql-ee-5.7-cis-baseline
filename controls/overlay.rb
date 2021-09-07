@@ -223,23 +223,6 @@ include_controls 'oracle-mysql-ee-5.7-cis-baseline' do
     end
   end
   
-  control '7.5' do
-    tag "check": "Execute the following SQL query to determine if any users have a blank password:
-        SELECT user,host 
-        FROM mysql.user 
-        WHERE (plugin IN('mysql_native_password', 'mysql_old_password') 
-          AND LENGTH(password) = 0 AND LENGTH(authentication_string) = 0);
-    No rows will be returned if all accounts have a password set."
-
-    query = %{SELECT user,host FROM mysql.user WHERE (plugin IN('mysql_native_password', 'mysql_old_password') AND LENGTH(password) = 0 AND LENGTH(authentication_string) = 0);}
-    sql_session = mysql_session(attribute('user'), attribute('password'), attribute('host'), attribute('port'))
-    users_with_blank_passwords = sql_session.query(query).stdout.strip
-
-    describe 'The MySQL users with blank passwords' do
-      subject { users_with_blank_passwords }
-      it { should be_empty }
-    end
-  end
 
   control '7.6' do
     
